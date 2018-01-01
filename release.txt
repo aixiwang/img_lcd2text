@@ -1,0 +1,19 @@
+[2017/12/28 Aixi Wang]
+1. added image capture by opencv interface
+2. added my_img_binarization function
+3. added "rotate" informaion extract from mask.bmp
+
+[2017/12/29 Aixi Wang]
+1. changed config.json format, added config2.json
+2. added mask3.bmp for seg points labeling
+3. restruct configuration generation
+
+[2017/12/31 Aixi Wang]
+1. changed to 9 points to check 7seg digital character to improve robustness from 7 points
+2. restruct code, added detect.py to put last step detection specific code
+
+
+
+
+
+
