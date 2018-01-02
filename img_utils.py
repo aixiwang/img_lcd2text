@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2017, Aixi Wang <aixi.wang@hotmail.com>
 # 
-# reference project: https://github.com/jasonlfunk/ocr-text-extraction
+# referenced project: https://github.com/jasonlfunk/ocr-text-extraction
 #
 # Copyright (c) 2012, Jason Funk <jasonlfunk@gmail.com>
 #
