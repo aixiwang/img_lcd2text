@@ -12,6 +12,10 @@
 1. changed to 9 points to check 7seg digital character to improve robustness from 7 points
 2. restruct code, added detect.py to put last step detection specific code
 
+[2018/1/7 Aixi Wang]
+1. improved text extraction rate
+
+
 
 
 

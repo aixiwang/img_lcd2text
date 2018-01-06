@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2017, Aixi Wang <aixi.wang@hotmail.com>
 # 
-# referenced project: https://github.com/jasonlfunk/ocr-text-extraction
+# reference project: https://github.com/jasonlfunk/ocr-text-extraction
 #
 # Copyright (c) 2012, Jason Funk <jasonlfunk@gmail.com>
 #
@@ -668,6 +668,61 @@ def my_img_binarization(f1,f2):
     cv2.imwrite(f2,new_image)
     return 0, new_image
 
+#----------------------
+# my_img_binarization_2
+#---------------------- 
+def my_img_binarization_2(f1,f2,ratio=0.8):
+
+    print 'my_img_binarization_2 ratio:',ratio
+    img = cv2.imread(f1)
+    new_image = img.copy()
+    new_image.fill(255)
+    #imgGRAY = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    imgYCC = cv2.cvtColor(img, cv2.COLOR_BGR2YCR_CB)
+    
+    h = img.shape[0]
+    w = img.shape[1]
+    
+    sum = 0
+    for y in xrange(0,h):
+        for x in xrange(0,w):
+            sum += imgYCC[y][x][0]
+            #sum += imgGRAY[y][x]
+            
+    avg = sum/(h*w)       
+    print 'avg:',avg
+
+    # binarization
+    for y in xrange(0,h):
+        for x in xrange(0,w):
+            if imgYCC[y][x][0] < avg*ratio:
+            #if imgGRAY[y][x] < avg*0.8:
+                new_image[y][x][2] = 0
+                new_image[y][x][1] = 0
+                new_image[y][x][0] = 0
+
+
+    # remove isolated points
+    for y in xrange(0,h):
+        for x in xrange(0,w):
+            if new_image[y][x][0] == 0 and (y == 0 or y == (h-1)):
+                new_image[y][x][2] = 255
+                new_image[y][x][1] = 255
+                new_image[y][x][0] = 255
+                
+            elif new_image[y][x][0] == 0 and (x == 0 or x == (w-1)):
+                new_image[y][x][2] = 255
+                new_image[y][x][1] = 255
+                new_image[y][x][0] = 255
+            elif new_image[y][x][0] == 0 and new_image[y-1][x-1][0] == 255 and new_image[y+1][x+1][0] == 255 and new_image[y-1][x][0] == 255 and new_image[y+1][x][0] == 255 and new_image[y][x-1][0] == 255 and new_image[y][x+1][0] == 255 and new_image[y-1][x+1][0] == 255 and new_image[y+1][x-1][0] == 255:
+                new_image[y][x][2] = 255
+                new_image[y][x][1] = 255
+                new_image[y][x][0] = 255
+            else:
+                pass
+
+    cv2.imwrite(f2,new_image)
+    return 0, new_image
     
 #-------------------
 # log_dump

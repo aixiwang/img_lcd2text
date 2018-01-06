@@ -122,22 +122,27 @@ if __name__ == "__main__":
                             
                             cv2.imwrite(f3,img3)
                             
-                            #ret,new_image = img_utils.split_f_and_b(f2,f3)
-                            print 'step 4 =================> do binarization ...'
-                            ret,new_image = img_utils.my_img_binarization(f3,f4)
-                            
-                            
-                            if len(seg_points)>0:
-                                print 'step 5 =================> do extract seg info. ...'
-                                detect.do_detect(new_image,config_json)
-                                    
-                                if run_mode == 'normal':
-                                    try:
-                                        os.remove(f2)
-                                        os.remove(f3)
-                                    except:
-                                        pass
-
+                            r = 1.0
+                            while r > 0.8:
+                                print 'r:',r
+                                #ret,new_image = img_utils.split_f_and_b(f2,f3)
+                                print 'step 4 =================> do binarization ...'
+                                ret,new_image = img_utils.my_img_binarization_2(f3,f4,ratio=r)                               
+                                
+                                if len(seg_points)>0:
+                                    print 'step 5 =================> do extract seg info. ...'
+                                    if detect.do_detect(new_image,config_json) == 0:
+                                        break
+                                        
+                                r -= 0.1
+                                
+                            if run_mode == 'normal':
+                                try:
+                                    os.remove(f2)
+                                    os.remove(f3)
+                                except:
+                                    pass
+                                
 
                         else:
                             print 'no subimg_rect defintion, passed reamaining steps'
