@@ -23,4 +23,5 @@ ERR_FILE = './img/err_%%.bmp'
 #------------------------------- 
 def do_detect(img,config_json):
     # to be designed
+    return 0
     pass
